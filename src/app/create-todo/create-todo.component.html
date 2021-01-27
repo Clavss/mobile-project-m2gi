@@ -1,0 +1,11 @@
+<form (ngSubmit)="addTodo()">
+  <ion-item>
+    <ion-label>Name</ion-label>
+    <ion-input type="text" [(ngModel)]="newTodo.name" name="name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Description</ion-label>
+    <ion-input type="text" [(ngModel)]="newTodo.description" name="description"></ion-input>
+  </ion-item>
+  <ion-button ion-button type="submit" block [disabled]="newTodo.name == undefined || newTodo.name.length < 2">Submit</ion-button>
+</form>
