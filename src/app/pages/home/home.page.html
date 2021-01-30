@@ -1,0 +1,33 @@
+<div>
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        myApp
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>
+    <ion-button expand="block" (click)="logout()">Logout</ion-button>
+  </div>
+  <div>
+    <ion-item>Want to create a new account ?</ion-item>
+    <ion-button expand="block" [routerLink]="['/register']" routerDirection="forward">Go to register page</ion-button>
+  </div>
+</div>
+
+  <div *ngIf="lists.length != 0">
+  <ion-list>
+      <ion-item-sliding *ngFor="let l of lists">
+        <ion-item [routerLink]="['/list-details/', l?.id]" routerDirection="forward">
+          <ion-label>{{ l?.name }}</ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="delete(l?.id)"><ion-icon name="trash"></ion-icon></ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+<ion-button expand="block" (click)="presentModal()">Add new list</ion-button>

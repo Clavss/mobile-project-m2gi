@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import {CreateListComponent} from "../create-list/create-list.component";
-import {CreateTodoComponent} from "../create-todo/create-todo.component";
+import {CreateListComponent} from "../../create-list/create-list.component";
+import {CreateTodoComponent} from "../../create-todo/create-todo.component";
 
 
 @NgModule({

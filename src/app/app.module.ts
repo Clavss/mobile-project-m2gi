@@ -22,7 +22,7 @@ import {AngularFireAnalyticsModule} from "@angular/fire/analytics";
 	imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFireAnalyticsModule,
-		AngularFirestoreModule
+		AngularFirestoreModule,
 	],
 	providers: [
 		StatusBar,
