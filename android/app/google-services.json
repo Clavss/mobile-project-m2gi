@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "214677055022",
+    "project_id": "mobile-project-m2gi",
+    "storage_bucket": "mobile-project-m2gi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214677055022:android:e1bcbaf35e32c83c10a1bf",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214677055022-ghceg3fn04k7aked16alkc4nkmlgg980.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "bfafa09e9c3e810461633f1a73481435fce9ee43"
+          }
+        },
+        {
+          "client_id": "214677055022-m9r7kj1e2tavlkomsiqg2ud2gjcqjhp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73XsLxZVcJqluM9JEjAjew0zqGSaMZGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214677055022-m9r7kj1e2tavlkomsiqg2ud2gjcqjhp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

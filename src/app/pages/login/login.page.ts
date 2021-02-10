@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFireAuth} from "@angular/fire/auth";
 import firebase from "firebase";
 import {Router} from "@angular/router";
+import {Plugins} from "@capacitor/core";
+import '@codetrix-studio/capacitor-google-auth'
 
 @Component({
 	selector: 'app-login',
@@ -32,31 +34,27 @@ export class LoginPage implements OnInit {
 
 	login(email: string, password: string): void {
 		this.auth.signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        if (error.code === 'auth/wrong-password') {
-          alert('Wrong password');
-        } else if (error.code === 'auth/invalid-email'
-									|| error.code === 'auth/user-not-found') {
-         this.loginForm.controls['email'].setValue('');
+			.catch((error) => {
+				if (error.code === 'auth/wrong-password') {
+					alert('Wrong password');
+				} else if (error.code === 'auth/invalid-email'
+					|| error.code === 'auth/user-not-found') {
+					this.loginForm.controls['email'].setValue('');
 					alert(error.message);
-        } else {
+				} else {
 					alert(error.message);
 				}
-		});
+			});
 	}
 
 	private catchErrorMessages(error): void {
 		alert(error.message);
 	}
 
-	loginWithGoogle() {
-		this.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-			.catch(e => this.catchErrorMessages(e));
-	}
-
-	loginWithFacebook() {
-		this.auth.signInWithRedirect(new firebase.auth.FacebookAuthProvider())
-			.catch(e => this.catchErrorMessages(e));
+	async loginWithGoogle() {
+		let googleUser = await Plugins.GoogleAuth.signIn() as any;
+		const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+		await this.auth.signInAndRetrieveDataWithCredential(credential);
 	}
 
 }

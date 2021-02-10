@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -25,6 +26,7 @@ repositories {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:26.4.0')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation project(':capacitor-android')
@@ -32,6 +34,8 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+
+    implementation 'com.google.firebase:firebase-analytics'
 }
 
 apply from: 'capacitor.build.gradle'
