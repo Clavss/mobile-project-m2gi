@@ -1,7 +1,32 @@
-<form (ngSubmit)="create()">
-    <ion-item>
-        <ion-label>Name</ion-label>
-        <ion-input type="text" [(ngModel)]="list.name" name="title"></ion-input>
-    </ion-item>
-    <ion-button ion-button type="submit" block [disabled]="list.name == undefined || list.name.length < 2">Submit</ion-button>
-</form>
+<ion-header translucent>
+    <ion-toolbar>
+        <ion-title>Modal Content</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()">Close</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+    <form [formGroup]="createListForm" (ngSubmit)="create()">
+        <ion-item lines="full">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input type="text" name="name" formControlName="name" required></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.required">
+      <span>
+        This field is required
+      </span>
+        </ion-text>
+        <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.minlength">
+      <span>
+        Minimum length 2
+      </span>
+        </ion-text>
+        <ion-row>
+            <ion-col>
+                <ion-button [disabled]="createListForm.invalid" type="submit" color="primary" expand="block">Submit
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

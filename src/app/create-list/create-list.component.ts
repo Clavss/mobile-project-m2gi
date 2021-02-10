@@ -1,27 +1,40 @@
 import {Component, OnInit} from '@angular/core';
 import {ListService} from "../services/list.service";
-import {List} from "../models/list";
 import {ModalController} from "@ionic/angular";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {List} from "../models/list";
 
 @Component({
-    selector: 'app-create-list',
-    templateUrl: './create-list.component.html',
-    styleUrls: ['./create-list.component.scss'],
+	selector: 'app-create-list',
+	templateUrl: './create-list.component.html',
+	styleUrls: ['./create-list.component.scss'],
 })
 export class CreateListComponent implements OnInit {
 
-    list: List = new List('');
+	createListForm: FormGroup;
 
-    constructor(private listService: ListService,
-                private modalCtrl: ModalController) {
-    }
+	constructor(private listService: ListService,
+							private modalCtrl: ModalController,
+							private fb: FormBuilder) {
+	}
 
-    ngOnInit() {
-    }
+	ngOnInit() {
+		this.createListForm = this.fb.group({
+			name: ['', [Validators.required, Validators.minLength(2)]],
+		})
+	}
 
-    create(): void {
-        this.listService.create(this.list);
-        this.modalCtrl.dismiss();
-    }
+	dismissModal() {
+		this.modalCtrl.dismiss();
+	}
+
+	create(): void {
+		this.listService.create(new List(this.createListForm.get('name').value));
+		this.dismissModal();
+	}
+
+	get errorControl() {
+		return this.createListForm.controls;
+	}
 
 }
