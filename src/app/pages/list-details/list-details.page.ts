@@ -6,46 +6,42 @@ import {ModalController} from "@ionic/angular";
 import {CreateTodoComponent} from "../../create-todo/create-todo.component";
 
 @Component({
-    selector: 'app-list-details',
-    templateUrl: './list-details.page.html',
-    styleUrls: ['./list-details.page.scss'],
+	selector: 'app-list-details',
+	templateUrl: './list-details.page.html',
+	styleUrls: ['./list-details.page.scss'],
 })
 export class ListDetailsPage implements OnInit {
 
-    currentList: List;
+	currentList: List;
 
-    constructor(private route: ActivatedRoute,
-                private listService: ListService,
-                private modalController: ModalController) {
-    }
+	constructor(private route: ActivatedRoute,
+							private listService: ListService,
+							private modalController: ModalController) {
+		this.route.params.subscribe((params: Params) => {
+			this.listService.getOne(params['id']).subscribe(list => {
+				this.currentList = list;
+				this.currentList.todos = this.listService.getAllTodos(this.currentList?.id);
+			});
+		});
+	}
 
-    ngOnInit() {
-        this.route.params.subscribe((params: Params) => {
-            this.currentList = this.listService.getOne(params['id']);
-        });
-    }
+	ngOnInit() {
+	}
 
-    majList(): void {
-        this.currentList = this.listService.getOne(this.currentList.id);
-    }
+	delete(id: string): void {
+		this.listService.deleteTodo(this.currentList, id);
+	}
 
-    delete(id: string): void {
-        this.listService.deleteTodo(this.currentList, id);
-        this.majList();
-    }
-
-    async presentModal() {
-        const modal = await this.modalController.create({
-            component: CreateTodoComponent,
-            componentProps: {
-              currentList: this.currentList
-            },
-            swipeToClose: true,
-        });
-        modal.onWillDismiss().then(() => {
-            this.majList();
-        });
-        return await modal.present();
-    }
+	async presentModal() {
+		const modal = await this.modalController.create({
+			component: CreateTodoComponent,
+			componentProps: {
+				currentList: this.currentList
+			},
+			swipeToClose: true,
+			cssClass: 'auto-height',
+		});
+		return await modal.present();
+	}
 
 }
