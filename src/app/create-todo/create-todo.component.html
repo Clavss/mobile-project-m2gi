@@ -1,16 +1,7 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-title>Modal Content</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Close</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-<ion-content fullscreen>
-  <form [formGroup]="createTodoForm" (ngSubmit)="addTodo()">
-    <ion-item lines="full">
-      <ion-label position="floating">Name</ion-label>
-      <ion-input type="text" name="name" formControlName="name" required></ion-input>
+<div class="inner-content">
+  <form [formGroup]="createTodoForm" (ngSubmit)="createTodoForm.valid && addTodo()" novalidate>
+    <ion-item>
+      <ion-input autofocus="true" placeholder="Todo name" type="text" name="name" formControlName="name" required></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.required">
       <span>
@@ -22,20 +13,12 @@
         Minimum length 2
       </span>
     </ion-text>
-    <ion-item lines="full">
-      <ion-label position="floating">Description</ion-label>
-      <ion-input type="text" name="description" formControlName="description"></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="errorControl.description.touched && errorControl.description.errors?.maxlength">
-      <span>
-        Max length 255
-      </span>
-    </ion-text>
     <ion-row>
       <ion-col>
-        <ion-button [disabled]="createTodoForm.invalid" type="submit" color="primary" expand="block">Submit
+        <ion-button [disabled]="createTodoForm.invalid" type="button" color="primary" expand="block">
+          Create
         </ion-button>
       </ion-col>
     </ion-row>
   </form>
-</ion-content>
+</div>

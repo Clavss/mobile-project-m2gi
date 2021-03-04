@@ -1,30 +1,41 @@
 <div>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>register</ion-title>
+  <ion-header mode="ios">
+    <ion-toolbar *ngIf="logged; else elseBlock">
+      <ion-buttons slot="start">
+        <ion-button (click)="logout()">Logout</ion-button>
+      </ion-buttons>
+      <ion-title>Register</ion-title>
+      <ion-buttons slot="end">
+        <ion-button [routerLink]="['/home']" routerDirection="forward">
+          <ion-icon name="home"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
-  </ion-header>
 
-  <div *ngIf="logged; else elseBlock">
-    <ion-button expand="block" (click)="logout()">Logout</ion-button>
-  </div>
+    <ng-template #elseBlock>
+      <ion-toolbar>
+        <ion-title>Register</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [routerLink]="['/login']" routerDirection="forward">Login</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ng-template>
+  </ion-header>
 
   <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.controls['email'].value, registerForm.controls['password'].value)">
     <ion-item>Want to create a new account ?</ion-item>
     <ion-item>
       <ion-input placeholder="email" formControlName="email"></ion-input>
-      <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+      <ion-label color="danger" *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
         Invalid format
-      </div>
+      </ion-label>
     </ion-item>
     <ion-item>
       <ion-input type="password" placeholder="password" formControlName="password"></ion-input>
+      <ion-label color="danger" *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
+        Min length 8
+      </ion-label>
     </ion-item>
     <ion-button expand="block" type="submit" [disabled]="!registerForm.valid">Register</ion-button>
   </form>
 </div>
-
-<ng-template #elseBlock>
-  <ion-item>Already have an account ?</ion-item>
-  <ion-button expand="block" [routerLink]="['/login']" routerDirection="forward">Go to login page</ion-button>
-</ng-template>

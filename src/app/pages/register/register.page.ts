@@ -44,7 +44,8 @@ export class RegisterPage implements OnInit {
 
 	logout(): void {
 		firebase.auth().signOut()
-			.then(() => this.route.navigate(['/login']))
+			// Todo: fix not working redirect, always redirect to home instead of register
+			.then(() => this.route.navigate(['/register']))
 			.catch((error) => alert(error.message));
 	}
 

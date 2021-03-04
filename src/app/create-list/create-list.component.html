@@ -1,16 +1,7 @@
-<ion-header translucent>
-    <ion-toolbar>
-        <ion-title>Modal Content</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="dismissModal()">Close</ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header>
-<ion-content fullscreen>
-    <form [formGroup]="createListForm" (ngSubmit)="create()">
-        <ion-item lines="full">
-            <ion-label position="floating">Name</ion-label>
-            <ion-input type="text" name="name" formControlName="name" required></ion-input>
+<div class="inner-content">
+    <form [formGroup]="createListForm" (ngSubmit)="createListForm.valid && create()" novalidate>
+        <ion-item>
+            <ion-input autofocus="true" placeholder="List name" type="text" name="name" formControlName="name" required></ion-input>
         </ion-item>
         <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.required">
       <span>
@@ -24,9 +15,10 @@
         </ion-text>
         <ion-row>
             <ion-col>
-                <ion-button [disabled]="createListForm.invalid" type="submit" color="primary" expand="block">Submit
+                <ion-button [disabled]="createListForm.invalid" type="submit" color="primary" expand="block">
+                    Create
                 </ion-button>
             </ion-col>
         </ion-row>
     </form>
-</ion-content>
+</div>

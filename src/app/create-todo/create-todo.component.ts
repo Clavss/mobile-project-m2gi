@@ -23,7 +23,6 @@ export class CreateTodoComponent implements OnInit {
 	ngOnInit() {
 		this.createTodoForm = this.fb.group({
 			name: ['', [Validators.required, Validators.minLength(2)]],
-			description: ['', [Validators.maxLength(255)]],
 		})
 	}
 
@@ -32,7 +31,7 @@ export class CreateTodoComponent implements OnInit {
 	}
 
 	addTodo(): void {
-		this.listService.addTodo(this.currentList, new Todo(this.createTodoForm.get('name').value, this.createTodoForm.get('name').value));
+		this.listService.addTodo(this.currentList, new Todo(this.createTodoForm.get('name').value, false));
 		this.dismissModal();
 	}
 

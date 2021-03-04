@@ -1,18 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>list-details of {{currentList?.name}}</ion-title>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{currentList?.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="currentList.todos?.length != 0">
+  <div *ngIf="currentList?.todos?.length != 0">
     <ion-list>
-      <ion-item-sliding *ngFor="let t of currentList.todos">
+      <ion-item-sliding *ngFor="let t of currentList?.todos | async">
         <ion-item [routerLink]="['/todo-details/', t?.id]" routerDirection="forward">
           <ion-label>{{ t?.name }}</ion-label>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="delete(t?.id)"><ion-icon name="trash"></ion-icon></ion-item-option>
+          <ion-item-option expandable color="danger" (click)="delete(l?.id)"><ion-icon name="trash" style="zoom:2.0;"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>

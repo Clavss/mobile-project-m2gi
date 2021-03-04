@@ -1,18 +1,40 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
-    <ion-title>todo-details of {{currentTodo?.name}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="success" icon="save" [disabled]="updateTodoForm.invalid" (click)="submitForm()">
+        <ion-icon slot="icon-only" name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label>Name</ion-label>
-    <ion-input type="text" [(ngModel)]="currentTodo.name" name="name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Description</ion-label>
-    <ion-input type="text" [(ngModel)]="currentTodo.description" name="description"></ion-input>
-  </ion-item>
+  <form [formGroup]="updateTodoForm">
+    <ion-item lines="full">
+      <ion-label position="floating">Name</ion-label>
+      <ion-input formControlName="name" type="text" [value]="currentTodo?.name" name="name"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.required">
+      <span>
+        This field is required
+      </span>
+    </ion-text>
+    <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.minlength">
+      <span>
+        Minimum length 2
+      </span>
+    </ion-text>
+    <ion-item lines="full">
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea auto-grow="true" spellcheck="true" type="text" formControlName="description" placeholder="Enter any notes here..." [value]="currentTodo?.description" name="description"></ion-textarea>
+    </ion-item>
+    <ion-text color="danger" *ngIf="errorControl.description.touched && errorControl.description.errors?.maxlength">
+      <span>
+        Max length 255
+      </span>
+    </ion-text>
+  </form>
 </ion-content>
-
-<ion-button (click)="update()">Update</ion-button>

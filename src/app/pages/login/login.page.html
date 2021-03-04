@@ -1,24 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <div>
-  <ion-item>
-    <ion-button (click)="loginWithGoogle()"><ion-icon name="logo-google"></ion-icon> Google</ion-button>
-  </ion-item>
+  <ion-header mode="ios">
+    <ion-toolbar>
+      <ion-title>Login</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="loginWithGoogle()"><ion-icon name="logo-google"></ion-icon>oogle</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
   <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.controls['email'].value, loginForm.controls['password'].value)">
     <ion-item>Already have an account ?</ion-item>
     <ion-item>
       <ion-input placeholder="email" formControlName="email"></ion-input>
-      <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+      <ion-label color="danger" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
         Invalid format
-      </div>
+      </ion-label>
     </ion-item>
     <ion-item>
       <ion-input type="password" placeholder="password" formControlName="password"></ion-input>
+      <ion-label color="danger" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+        Min length 8
+      </ion-label>
     </ion-item>
     <ion-button expand="block" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
   </form>

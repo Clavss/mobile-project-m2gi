@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Todo} from "../../models/todo";
 import {ActivatedRoute, Params} from "@angular/router";
 import {ListService} from "../../services/list.service";
-import {NavController} from "@ionic/angular";
+import {ModalController, NavController} from "@ionic/angular";
+import {Observable} from "rxjs";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-todo-details',
@@ -12,25 +14,36 @@ import {NavController} from "@ionic/angular";
 export class TodoDetailsPage implements OnInit {
 
   currentTodo: Todo;
+  updateTodoForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
               private listService: ListService,
-              private navCtrl: NavController) { }
+              private navCtrl: NavController,
+              private fb: FormBuilder) {
+    this.route.params.subscribe((params: Params) =>
+      this.listService.getOneTodo(params['id']).subscribe(
+        todo => this.currentTodo = todo
+      )
+    );
+  }
 
   ngOnInit() {
-    this.majTodo();
+    this.updateTodoForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      description: ['', [Validators.maxLength(255)]],
+    })
   }
 
-  majTodo(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.currentTodo = this.listService.getOneTodo(params['id']);
-    });
-  }
-
-  update() {
-    this.listService.update(this.currentTodo);
-    this.majTodo();
+  submitForm() {
+    const name = this.updateTodoForm.get('name').value;
+    const desc = this.updateTodoForm.get('description').value;
+    console.log(name, desc);
+    this.listService.updateTodo(this.currentTodo, name, desc);
     this.navCtrl.back();
+  }
+
+  get errorControl() {
+    return this.updateTodoForm.controls;
   }
 
 }
