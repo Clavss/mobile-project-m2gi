@@ -10,18 +10,20 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="lists?.length != 0">
-  <ion-list>
-    <ion-item-sliding *ngFor="let l of lists | async">
-      <ion-item [routerLink]="['/list-details/', l.id]" routerDirection="forward">
-        <ion-label>{{ l.name }}</ion-label>
-      </ion-item>
+<ion-content>
+  <div *ngIf="lists?.length != 0">
+    <ion-list lines="full" inset="true" mode="ios">
+      <ion-item-sliding *ngFor="let l of lists | async">
+        <ion-item [routerLink]="['/list-details/', l.id]" routerDirection="forward">
+          <ion-label class="my-label">{{ l.name }}</ion-label>
+        </ion-item>
 
-      <ion-item-options side="end">
-        <ion-item-option expandable color="danger" (click)="delete(l?.id)"><ion-icon name="trash" style="zoom:2.0;"></ion-icon></ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</div>
+        <ion-item-options side="end">
+          <ion-item-option expandable color="danger" (click)="delete(l?.id)"><ion-icon name="trash" style="zoom:2.0;"></ion-icon></ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>
 
 <ion-button expand="block" (click)="presentModal()">Add new list</ion-button>

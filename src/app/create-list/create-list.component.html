@@ -13,6 +13,11 @@
         Minimum length 2
       </span>
         </ion-text>
+        <ion-text color="danger" *ngIf="errorControl.name.touched && errorControl.name.errors?.maxlength">
+      <span>
+        Maximum length 18
+      </span>
+        </ion-text>
         <ion-row>
             <ion-col>
                 <ion-button [disabled]="createListForm.invalid" type="submit" color="primary" expand="block">
