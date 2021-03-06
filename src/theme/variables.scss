@@ -74,6 +74,7 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -229,4 +230,23 @@
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+ion-item {
+  --min-height: 10vh;
+  font-size: 4vh;
+}
+
+ion-toolbar {
+  --min-height: 7vh;
+  font-size: 3vh;
+}
+
+ion-title {
+  font-size: 4vh;
+}
+
+ion-button {
+  height: 8vh;
+  font-size: 4vh;
 }
