@@ -14,14 +14,19 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
-		path: 'list-details/:id',
-		loadChildren: () => import('./pages/list-details/list-details.module').then(m => m.ListDetailsPageModule),
-		canActivate: [AuthGuard]
-	},
-	{
-		path: 'todo-details/:id',
-		loadChildren: () => import('./pages/todo-details/todo-details.module').then(m => m.TodoDetailsPageModule),
-		canActivate: [AuthGuard]
+		path: 'list-details/:list-id',
+		canActivate: [AuthGuard],
+		children: [
+			{
+				path: 'todo-details/:todo-id',
+				loadChildren: () => import('./pages/todo-details/todo-details.module').then(m => m.TodoDetailsPageModule),
+				canActivate: [AuthGuard]
+			},
+			{
+				path: '',
+				loadChildren: () => import('./pages/list-details/list-details.module').then(m => m.ListDetailsPageModule),
+			}
+		]
 	},
 	{
 		path: 'login',

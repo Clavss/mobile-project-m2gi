@@ -21,7 +21,7 @@ export class TodoDetailsPage implements OnInit {
               private navCtrl: NavController,
               private fb: FormBuilder) {
     this.route.params.subscribe((params: Params) =>
-      this.listService.getOneTodo(params['id']).subscribe(
+      this.listService.getOneTodo(params['todo-id']).subscribe(
         todo => this.currentTodo = todo
       )
     );
