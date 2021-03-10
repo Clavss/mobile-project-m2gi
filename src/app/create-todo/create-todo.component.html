@@ -15,7 +15,7 @@
     </ion-text>
     <ion-row>
       <ion-col>
-        <ion-button [disabled]="createTodoForm.invalid" type="button" color="primary" expand="block">
+        <ion-button (click)="addTodo()" [disabled]="createTodoForm.invalid" type="button" color="primary" expand="block">
           Create
         </ion-button>
       </ion-col>

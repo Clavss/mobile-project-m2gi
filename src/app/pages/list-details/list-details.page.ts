@@ -28,8 +28,8 @@ export class ListDetailsPage implements OnInit {
 	ngOnInit() {
 	}
 
-	delete(id: string): void {
-		this.listService.deleteTodo(this.currentList, id);
+	delete(todoId: string): void {
+		this.listService.deleteTodo(this.currentList.id, todoId);
 	}
 
 	async presentModal() {

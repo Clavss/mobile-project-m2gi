@@ -5,6 +5,7 @@ import {ListService} from "../../services/list.service";
 import {ModalController, NavController} from "@ionic/angular";
 import {Observable} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {List} from "../../models/list";
 
 @Component({
   selector: 'app-todo-details',
@@ -13,6 +14,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class TodoDetailsPage implements OnInit {
 
+  currentList: List;
   currentTodo: Todo;
   updateTodoForm: FormGroup;
 
@@ -20,11 +22,14 @@ export class TodoDetailsPage implements OnInit {
               private listService: ListService,
               private navCtrl: NavController,
               private fb: FormBuilder) {
-    this.route.params.subscribe((params: Params) =>
-      this.listService.getOneTodo(params['todo-id']).subscribe(
+    this.route.params.subscribe((params: Params) => {
+      this.listService.getOne(params['list-id']).subscribe(list =>
+        this.currentList = list
+      );
+      this.listService.getOneTodo(params['list-id'], params['todo-id']).subscribe(
         todo => this.currentTodo = todo
-      )
-    );
+      );
+    });
   }
 
   ngOnInit() {
@@ -37,8 +42,7 @@ export class TodoDetailsPage implements OnInit {
   submitForm() {
     const name = this.updateTodoForm.get('name').value;
     const desc = this.updateTodoForm.get('description').value;
-    console.log(name, desc);
-    this.listService.updateTodo(this.currentTodo, name, desc);
+    this.listService.updateTodo(this.currentList, this.currentTodo, name, desc);
     this.navCtrl.back();
   }
 
