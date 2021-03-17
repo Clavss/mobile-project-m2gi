@@ -232,21 +232,6 @@
   }
 }
 
-ion-item {
-  --min-height: 10vh;
-  font-size: 4vh;
-}
-
-ion-toolbar {
-  --min-height: 7vh;
-  font-size: 3vh;
-}
-
-ion-title {
-  font-size: 4vh;
-}
-
-ion-button {
-  height: 8vh;
-  font-size: 4vh;
+ion-menu ion-list ion-item {
+  pointer-events: auto !important;
 }
