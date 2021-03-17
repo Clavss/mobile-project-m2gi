@@ -31,7 +31,7 @@ export class CreateTodoComponent implements OnInit {
 	}
 
 	addTodo(): void {
-		this.listService.addTodo(this.currentList.id, new Todo(this.createTodoForm.get('name').value, false));
+		this.listService.addTodo(this.currentList.id, this.createTodoForm.get('name').value);
 		this.dismissModal();
 	}
 

@@ -3,6 +3,7 @@ import {ListService} from '../services/list.service';
 import {ModalController} from '@ionic/angular';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {List} from '../models/list';
+import firebase from "firebase";
 
 @Component({
     selector: 'app-create-list',
@@ -12,10 +13,16 @@ import {List} from '../models/list';
 export class CreateListComponent implements OnInit {
 
     createListForm: FormGroup;
+    userEmail: string;
 
     constructor(private listService: ListService,
                 private modalCtrl: ModalController,
                 private fb: FormBuilder) {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.userEmail = user.email;
+            }
+        });
     }
 
     ngOnInit() {
@@ -29,7 +36,7 @@ export class CreateListComponent implements OnInit {
     }
 
     create(): void {
-        this.listService.createList(new List(this.createListForm.get('name').value));
+        this.listService.createList(this.createListForm.get('name').value, this.userEmail);
         this.dismissModal();
     }
 

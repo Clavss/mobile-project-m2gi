@@ -24,8 +24,8 @@ export class ListService {
 		);
 	}
 
-	getAllLists(): Observable<List[]> {
-		return this.lists;
+	getAllLists(owner: string): Observable<List[]> {
+		return this.lists.pipe(map(lists => lists.filter(l => l.owner == owner)));
 	}
 
 	getOne(id: string): Observable<List> {
@@ -35,11 +35,13 @@ export class ListService {
 			));
 	}
 
-	createList(list: List) {
+	createList(listName: string, userEmail: string) {
+		const list = new List(listName, userEmail);
 		this.listsCollection.doc(list.id).set({
 			todos: null,
 			id: list.id,
-			name: list.name
+			name: list.name,
+			owner: list.owner
 		});
 	}
 
@@ -47,7 +49,8 @@ export class ListService {
 		this.listsCollection.doc(listId).delete();
 	}
 
-	addTodo(listId: string, todo: Todo): void {
+	addTodo(listId: string, todoName: string): void {
+		const todo = new Todo(todoName, false);
 		this.listsCollection.doc(listId).collection('todos').doc(todo.id).set(Object.assign({}, todo));
 	}
 

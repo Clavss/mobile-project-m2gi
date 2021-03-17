@@ -9,7 +9,7 @@
 
 <ion-button expand="block" [routerLink]="['/voice']">Go to text to speech</ion-button>
 <ion-content>
-  <div *ngIf="(lists | async)?.length != 0">
+  <div>
     <ion-list lines="full" inset="true" mode="ios">
       <ion-item-sliding *ngFor="let l of lists | async">
         <ion-item [routerLink]="['/list-details/', l.id]" routerDirection="forward">

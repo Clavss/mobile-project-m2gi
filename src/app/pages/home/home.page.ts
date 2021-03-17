@@ -4,6 +4,7 @@ import {CreateListComponent} from '../../create-list/create-list.component';
 import {ListService} from '../../services/list.service';
 import {List} from '../../models/list';
 import {Observable} from 'rxjs';
+import firebase from "firebase";
 
 @Component({
     selector: 'app-home',
@@ -12,13 +13,16 @@ import {Observable} from 'rxjs';
 })
 export class HomePage {
     lists: Observable<List[]>;
+    userEmail: string;
 
     constructor(private listService: ListService,
                 private modalController: ModalController) {
-    }
-
-    ngOnInit() {
-        this.lists = this.listService.getAllLists();
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.userEmail = user.email;
+            }
+            this.lists = this.listService.getAllLists(this.userEmail);
+        });
     }
 
     delete(id: string): void {

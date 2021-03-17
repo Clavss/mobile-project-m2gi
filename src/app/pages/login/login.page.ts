@@ -34,16 +34,9 @@ export class LoginPage implements OnInit {
 
     login(email: string, password: string): void {
         this.auth.signInWithEmailAndPassword(email, password)
-            .catch((error) => {
-                if (error.code === 'auth/wrong-password') {
-                    alert('Wrong password');
-                } else if (error.code === 'auth/invalid-email'
-                    || error.code === 'auth/user-not-found') {
-                    this.loginForm.controls['email'].setValue('');
-                    alert(error.message);
-                } else {
-                    alert(error.message);
-                }
+            .catch(() => {
+                alert('Wrong email or password');
+                this.loginForm.controls['password'].setValue('');
             });
     }
 
