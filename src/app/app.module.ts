@@ -13,6 +13,7 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
 import {AngularFireAnalyticsModule} from "@angular/fire/analytics";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
 	declarations: [
@@ -23,6 +24,7 @@ import {AngularFireAnalyticsModule} from "@angular/fire/analytics";
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFireAnalyticsModule,
 		AngularFirestoreModule,
+		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 	],
 	providers: [
 		StatusBar,

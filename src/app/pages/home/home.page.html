@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="lists?.length != 0">
+  <div *ngIf="(lists | async).length != 0">
     <ion-list lines="full" inset="true" mode="ios">
       <ion-item-sliding *ngFor="let l of lists | async">
         <ion-item [routerLink]="['/list-details/', l.id]" routerDirection="forward">
