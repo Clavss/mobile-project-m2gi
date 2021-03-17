@@ -4,7 +4,7 @@
       <ion-back-button icon="arrow-back"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="success" icon="save" [disabled]="updateTodoForm.invalid" (click)="submitForm()">
+      <ion-button color="success" icon="save" [disabled]="updateTodoForm.invalid || noChange()" (click)="submitForm()">
         <ion-icon slot="icon-only" name="save"></ion-icon>
       </ion-button>
     </ion-buttons>

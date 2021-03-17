@@ -39,6 +39,11 @@ export class TodoDetailsPage implements OnInit {
     })
   }
 
+  noChange(): boolean {
+    return this.updateTodoForm.get('name').value == this.currentTodo.name &&
+      this.updateTodoForm.get('description').value == this.currentTodo.description;
+  }
+
   submitForm() {
     const name = this.updateTodoForm.get('name').value;
     const desc = this.updateTodoForm.get('description').value;
