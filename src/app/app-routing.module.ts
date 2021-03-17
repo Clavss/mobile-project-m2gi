@@ -47,6 +47,10 @@ const routes: Routes = [
 		loadChildren: () => import('./pages/verify-email/verify-email.module').then(m => m.VerifyEmailPageModule),
 		canActivate: [AuthGuard]
 	},
+  {
+    path: 'voice',
+    loadChildren: () => import('./pages/voice/voice.module').then( m => m.VoicePageModule)
+  },
 ];
 
 @NgModule({

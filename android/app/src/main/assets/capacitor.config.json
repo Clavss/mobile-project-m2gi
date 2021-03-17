@@ -1,5 +1,6 @@
 {
   "appId": "io.ionic.starter",
+  "windowsAndroidStudioPath": "C:\\Users\\therv\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\201.7042882\\bin\\studio64.exe",
   "appName": "myApp",
   "bundledWebRuntime": false,
   "npmClient": "npm",

@@ -1,15 +1,10 @@
 <div>
   <ion-header mode="ios">
-    <ion-toolbar *ngIf="logged; else elseBlock">
+    <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button (click)="logout()">Logout</ion-button>
+        <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>Register</ion-title>
-      <ion-buttons slot="end">
-        <ion-button [routerLink]="['/home']" routerDirection="forward">
-          <ion-icon name="home"></ion-icon>
-        </ion-button>
-      </ion-buttons>
     </ion-toolbar>
 
     <ng-template #elseBlock>

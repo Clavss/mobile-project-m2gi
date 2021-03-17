@@ -1,3 +1,36 @@
 <ion-app>
+  <ion-menu side="start" content-id="main-content">
+    <ion-header>
+      <ion-toolbar translucent>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="main-content">
+      <ion-list>
+        <div *ngIf="!isLog(); else logged">
+          <ion-item [routerLink]="['/login']" routerDirection="forward">
+            <ion-icon name="enter-outline" slot="start"></ion-icon>
+            <ion-label>Login page</ion-label>
+          </ion-item>
+          <ion-item [routerLink]="['/password-recovery']" routerDirection="forward">
+            <ion-icon name="help-outline" slot="start"></ion-icon>
+            <ion-label>Forgot your password</ion-label>
+          </ion-item>
+          <ion-item [routerLink]="['/register']" routerDirection="forward">
+            <ion-icon name="add-circle" slot="start"></ion-icon>
+            <ion-label>Go to register page</ion-label>
+          </ion-item>
+        </div>
+        <ng-template #logged>
+          <div>
+            <ion-item (click)="logout()">
+              <ion-icon name="exit-outline" slot="start"></ion-icon>
+              <ion-label>Logout</ion-label>
+            </ion-item>
+          </div>
+        </ng-template>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

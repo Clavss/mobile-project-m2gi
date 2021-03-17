@@ -1,12 +1,17 @@
 <div>
+
   <ion-header mode="ios">
     <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
       <ion-title>Login</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="loginWithGoogle()"><ion-icon name="logo-google"></ion-icon>oogle</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
+
 
   <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.controls['email'].value, loginForm.controls['password'].value)">
     <ion-item>Already have an account ?</ion-item>
@@ -24,14 +29,4 @@
     </ion-item>
     <ion-button expand="block" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
   </form>
-</div>
-
-<div>
-  <ion-item>Forgot your password ?</ion-item>
-  <ion-button expand="block" [routerLink]="['/password-recovery']" routerDirection="forward">Go to recovery page</ion-button>
-</div>
-
-<div>
-  <ion-item>Don't have an account yet ?</ion-item>
-  <ion-button expand="block" [routerLink]="['/register']" routerDirection="forward">Go to register page</ion-button>
 </div>
