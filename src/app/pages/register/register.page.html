@@ -6,15 +6,6 @@
       </ion-buttons>
       <ion-title>Register</ion-title>
     </ion-toolbar>
-
-    <ng-template #elseBlock>
-      <ion-toolbar>
-        <ion-title>Register</ion-title>
-        <ion-buttons slot="end">
-          <ion-button [routerLink]="['/login']" routerDirection="forward">Login</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ng-template>
   </ion-header>
 
   <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.controls['email'].value, registerForm.controls['password'].value)">

@@ -1,12 +1,14 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from "./shared/guard/auth.guard";
+import {OnlyNotLoggedAuthGuard} from "./shared/guard/onlyNotLogged.guard";
+import {OnlyLoggedAuthGuard} from "./shared/guard/onlyLogged.guard";
+import {VerifyEmailGuard} from "./shared/guard/verifyEmail.guard";
 
 const routes: Routes = [
 	{
 		path: 'home',
 		loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
-		canActivate: [AuthGuard]
+		canActivate: [OnlyLoggedAuthGuard]
 	},
 	{
 		path: '',
@@ -15,42 +17,45 @@ const routes: Routes = [
 	},
 	{
 		path: 'list-details/:list-id',
-		canActivate: [AuthGuard],
+		canActivate: [OnlyLoggedAuthGuard],
 		children: [
 			{
 				path: 'todo-details/:todo-id',
 				loadChildren: () => import('./pages/todo-details/todo-details.module').then(m => m.TodoDetailsPageModule),
-				canActivate: [AuthGuard]
+				canActivate: [OnlyLoggedAuthGuard]
 			},
 			{
 				path: '',
 				loadChildren: () => import('./pages/list-details/list-details.module').then(m => m.ListDetailsPageModule),
+				canActivate: [OnlyLoggedAuthGuard]
 			}
 		]
 	},
 	{
 		path: 'login',
 		loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
-		canActivate: [AuthGuard]
+		canActivate: [OnlyNotLoggedAuthGuard]
 	},
 	{
 		path: 'register',
 		loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule),
+		canActivate: [OnlyNotLoggedAuthGuard]
 	},
 	{
 		path: 'password-recovery',
 		loadChildren: () => import('./pages/password-recovery/password-recovery.module').then(m => m.PasswordRecoveryPageModule),
-		canActivate: [AuthGuard]
+		canActivate: [OnlyNotLoggedAuthGuard]
 	},
 	{
 		path: 'verify-email',
 		loadChildren: () => import('./pages/verify-email/verify-email.module').then(m => m.VerifyEmailPageModule),
-		canActivate: [AuthGuard]
+		canActivate: [OnlyLoggedAuthGuard, VerifyEmailGuard]
 	},
-  {
-    path: 'voice',
-    loadChildren: () => import('./pages/voice/voice.module').then( m => m.VoicePageModule)
-  },
+	{
+		path: 'voice',
+		loadChildren: () => import('./pages/voice/voice.module').then(m => m.VoicePageModule),
+		canActivate: [OnlyLoggedAuthGuard]
+	},
 ];
 
 @NgModule({
