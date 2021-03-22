@@ -15,9 +15,12 @@ export class ListService {
 	lists: Observable<List[]>;
 
 	constructor(private db: AngularFirestore) {
+		this.reloadData();
+	}
+
+	reloadData() {
 		const user = firebase.auth().currentUser;
-		console.log(user.email);
-		this.listsCollection = db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
+		this.listsCollection = this.db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
 		this.lists = this.listsCollection.snapshotChanges().pipe(
 			map(actions => actions.map(a => {
 				const data = a.payload.doc.data() as List;

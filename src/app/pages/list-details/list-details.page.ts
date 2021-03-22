@@ -19,8 +19,10 @@ export class ListDetailsPage implements OnInit {
 							private modalController: ModalController) {
 		this.route.params.subscribe((params: Params) => {
 			this.listService.getOne(params['list-id']).subscribe(list => {
-				this.currentList = list;
-				this.currentList.todos = this.listService.getAllTodos(this.currentList?.id);
+				if (list != null) {
+					this.currentList = list;
+					this.currentList.todos = this.listService.getAllTodos(this.currentList?.id);
+				}
 			});
 		});
 	}

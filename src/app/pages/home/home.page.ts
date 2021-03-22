@@ -16,7 +16,12 @@ export class HomePage {
 
     constructor(private listService: ListService,
                 private modalController: ModalController) {
-        this.lists = this.listService.getAllLists();
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user !== null) {
+                this.listService.reloadData();
+                this.lists = this.listService.getAllLists();
+            }
+        });
     }
 
     delete(id: string): void {
