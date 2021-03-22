@@ -13,16 +13,10 @@ import firebase from "firebase";
 })
 export class HomePage {
     lists: Observable<List[]>;
-    userEmail: string;
 
     constructor(private listService: ListService,
                 private modalController: ModalController) {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.userEmail = user.email;
-            }
-            this.lists = this.listService.getAllLists(this.userEmail);
-        });
+        this.lists = this.listService.getAllLists();
     }
 
     delete(id: string): void {

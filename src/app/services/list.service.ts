@@ -4,6 +4,7 @@ import {Todo} from "../models/todo";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
 import {flatMap, map} from "rxjs/operators";
+import firebase from "firebase";
 
 @Injectable({
 	providedIn: 'root'
@@ -14,7 +15,9 @@ export class ListService {
 	lists: Observable<List[]>;
 
 	constructor(private db: AngularFirestore) {
-		this.listsCollection = db.collection<List>('lists');
+		const user = firebase.auth().currentUser;
+		console.log(user.email);
+		this.listsCollection = db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
 		this.lists = this.listsCollection.snapshotChanges().pipe(
 			map(actions => actions.map(a => {
 				const data = a.payload.doc.data() as List;
@@ -24,8 +27,8 @@ export class ListService {
 		);
 	}
 
-	getAllLists(owner: string): Observable<List[]> {
-		return this.lists.pipe(map(lists => lists.filter(l => l.owner == owner)));
+	getAllLists(): Observable<List[]> {
+		return this.lists;
 	}
 
 	getOne(id: string): Observable<List> {
