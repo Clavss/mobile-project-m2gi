@@ -23,6 +23,10 @@ export class PhotoService {
       webviewPath: capturedPhoto.webPath
     });
   }
+
+  public async removeFromGallery(index: number) {
+      this.photos.splice(index, 1);
+  }
 }
 
 export interface Photo {
