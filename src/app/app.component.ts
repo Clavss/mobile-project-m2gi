@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Platform} from '@ionic/angular';
+import {MenuController, Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import firebase from 'firebase';
@@ -18,17 +18,14 @@ export class AppComponent {
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private route: Router,
+        private menu: MenuController,
     ) {
         this.initializeApp();
         route.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe(event => {
             event = event as NavigationEnd;
-            if (event.url.slice(1) === 'photo') {
-                this.todolist = false;
-            } else {
-                this.todolist = true;
-            }
+            this.todolist = event.url.slice(1) !== 'photo';
         });
 
     }
@@ -48,6 +45,7 @@ export class AppComponent {
     }
 
     logout(): void {
+        this.menu.toggle();
         firebase.auth().signOut()
             .then(() => this.route.navigate(['/login']))
             .catch((error) => alert(error.message));
@@ -57,11 +55,9 @@ export class AppComponent {
         return this.todolist;
     }
 
-    goTodo(): void {
-        this.route.navigate(['/home']);
+    goTo(go: string): void {
+        this.menu.toggle();
+        this.route.navigate([go]);
     }
 
-    goPhoto(): void {
-        this.route.navigate(['/photo']);
-    }
 }

@@ -20,14 +20,16 @@ export class ListService {
 
 	reloadData() {
 		const user = firebase.auth().currentUser;
-		this.listsCollection = this.db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
-		this.lists = this.listsCollection.snapshotChanges().pipe(
-			map(actions => actions.map(a => {
-				const data = a.payload.doc.data() as List;
-				const id = a.payload.doc.id;
-				return {id, ...data};
-			}))
-		);
+		if (user != null) {
+			this.listsCollection = this.db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
+			this.lists = this.listsCollection.snapshotChanges().pipe(
+				map(actions => actions.map(a => {
+					const data = a.payload.doc.data() as List;
+					const id = a.payload.doc.id;
+					return {id, ...data};
+				}))
+			);
+		}
 	}
 
 	getAllLists(): Observable<List[]> {
