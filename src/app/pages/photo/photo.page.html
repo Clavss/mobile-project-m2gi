@@ -12,7 +12,8 @@
     <ion-row>
       <ion-col size="6"
                *ngFor="let photo of photoService.photos; index as position">
-        <ion-img [src]="photo.webviewPath"></ion-img>
+        <ion-button *ngIf="buttonState(position)" (click)="supprPhoto(position)" class="imgbutton" color="danger">X</ion-button>
+        <ion-img (click)="showButton(position)" [src]="photo.webviewPath"></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
