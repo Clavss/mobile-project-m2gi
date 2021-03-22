@@ -27,15 +27,20 @@
               <ion-icon name="exit-outline" slot="start"></ion-icon>
               <ion-label>Logout</ion-label>
             </ion-item>
+            <div *ngIf="isTodo(); else photo">
+              <ion-item  (click)="goPhoto()">
+                <ion-icon name="exit-outline" slot="start"></ion-icon>
+                <ion-label>Go to my photos</ion-label>
+              </ion-item>
+            </div>
+            <ng-template #photo>
+              <ion-item  (click)="goTodo()">
+                <ion-icon name="exit-outline" slot="start"></ion-icon>
+                <ion-label>Go to my lists</ion-label>
+              </ion-item>
+            </ng-template>
           </div>
         </ng-template>
-<!--        <ion-item lines="full">-->
-<!--          <ion-icon slot="start" name="moon"></ion-icon>-->
-<!--          <ion-label>-->
-<!--            Toggle Dark Theme-->
-<!--          </ion-label>-->
-<!--          <ion-toggle (ionChange)="onClick($event)" slot="end"></ion-toggle>-->
-<!--        </ion-item>-->
       </ion-list>
     </ion-content>
   </ion-menu>
