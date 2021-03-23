@@ -10,15 +10,15 @@
 <ion-content>
   <div *ngIf="currentList?.todos?.length != 0">
     <ion-list lines="full" inset="true" mode="ios">
-      <ion-item-sliding *ngFor="let t of currentList?.todos | async">
+      <ion-item-sliding *ngFor="let t of currentList?.todos | async; let i=index" id="slider-{{i}}">
         <div class="row">
           <ion-checkbox class="checkbox" slot="start" color="success" [checked]="t?.isDone" (ionChange)="update(t, $event)"></ion-checkbox>
-          <ion-item class="list" [routerLink]="['./todo-details/', t?.id]" routerDirection="forward">
+          <ion-item class="list" (click)="goTodo(t?.id, i)" routerDirection="forward">
             <ion-label>{{ t?.name }}</ion-label>
           </ion-item>
         </div>
         <ion-item-options side="end">
-          <ion-item-option expandable color="danger" (click)="delete(t?.id)"><ion-icon name="trash" style="zoom:2.0;"></ion-icon></ion-item-option>
+          <ion-item-option expandable color="primary" (click)="showOption(t)"><ion-icon name="settings" style="zoom:2.0;"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>

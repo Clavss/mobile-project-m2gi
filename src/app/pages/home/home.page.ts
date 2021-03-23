@@ -28,7 +28,6 @@ export class HomePage {
             l => {
                 l.forEach(
                     (todolist) => {
-                        console.log(todolist);
                         listService.getAllTodos(todolist.id).subscribe(
                             (todos) => {
                                 let c = 0;

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {List} from "../models/list";
-import {Todo} from "../models/todo";
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
-import {combineLatest, Observable} from "rxjs";
-import {flatMap, map} from "rxjs/operators";
-import firebase from "firebase";
+import {List} from '../models/list';
+import {Todo} from '../models/todo';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {combineLatest, Observable} from 'rxjs';
+import {flatMap, map} from 'rxjs/operators';
+import firebase from 'firebase';
 
 @Injectable({
     providedIn: 'root'
@@ -18,52 +18,54 @@ export class ListService {
         this.reloadData();
     }
 
-	reloadData() {
-		const user = firebase.auth().currentUser;
-		if (user != null) {
-			this.listsCollection = this.db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
-			const byOwner$ = this.listsCollection.snapshotChanges().pipe(
-				map(actions => actions.map(a => {
-					const data = a.payload.doc.data() as List;
-					const id = a.payload.doc.id;
-					return {id, ...data};
-				}))
-			);
+    reloadData() {
+        const user = firebase.auth().currentUser;
+        if (user != null) {
+            this.listsCollection = this.db.collection<List>('lists', ref => ref.where('owner', '==', user.email));
+            const byOwner$ = this.listsCollection.snapshotChanges().pipe(
+                map(actions => actions.map(a => {
+                    const data = a.payload.doc.data() as List;
+                    const id = a.payload.doc.id;
+                    return {id, ...data};
+                }))
+            );
 
-			const byRead$ = this.db.collection<List>('lists', ref => ref.where('canRead', 'array-contains', user.email)).snapshotChanges().pipe(
-				map(actions => actions.map(a => {
-					const data = a.payload.doc.data() as List;
-					const id = a.payload.doc.id;
-					return {id, ...data};
-				}))
-			);
+            // tslint:disable-next-line:max-line-length
+            const byRead$ = this.db.collection<List>('lists', ref => ref.where('canRead', 'array-contains', user.email)).snapshotChanges().pipe(
+                map(actions => actions.map(a => {
+                    const data = a.payload.doc.data() as List;
+                    const id = a.payload.doc.id;
+                    return {id, ...data};
+                }))
+            );
 
-			const byWrite$ = this.db.collection<List>('lists', ref => ref.where('canWrite', 'array-contains', user.email)).snapshotChanges().pipe(
-				map(actions => actions.map(a => {
-					const data = a.payload.doc.data() as List;
-					const id = a.payload.doc.id;
-					return {id, ...data};
-				}))
-			);
+            // tslint:disable-next-line:max-line-length
+            const byWrite$ = this.db.collection<List>('lists', ref => ref.where('canWrite', 'array-contains', user.email)).snapshotChanges().pipe(
+                map(actions => actions.map(a => {
+                    const data = a.payload.doc.data() as List;
+                    const id = a.payload.doc.id;
+                    return {id, ...data};
+                }))
+            );
 
-			this.lists = this.combine2Observable(byOwner$, this.combine2Observable(byRead$, byWrite$));
-		}
-	}
+            this.lists = this.combine2Observable(byOwner$, this.combine2Observable(byRead$, byWrite$));
+        }
+    }
 
-	combine2Observable(obs1$: Observable<any>, obs2$: Observable<any>) {
-		return combineLatest(obs1$, obs2$, (a, b) => {
-			return a.reduce((acc,actual)=>{
-				if(!acc.some(o => o.id === actual.id)){
-					acc = [...acc, actual];
-				}
-				return acc;
-			},[...b]);
-		});
-	}
+    combine2Observable(obs1$: Observable<any>, obs2$: Observable<any>) {
+        return combineLatest(obs1$, obs2$, (a, b) => {
+            return a.reduce((acc, actual) => {
+                if (!acc.some(o => o.id === actual.id)) {
+                    acc = [...acc, actual];
+                }
+                return acc;
+            }, [...b]);
+        });
+    }
 
-	getAllLists(): Observable<List[]> {
-		return this.lists;
-	}
+    getAllLists(): Observable<List[]> {
+        return this.lists;
+    }
 
     getOne(id: string): Observable<List> {
         return this.lists

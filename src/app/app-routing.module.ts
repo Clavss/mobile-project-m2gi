@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/photo/photo.module').then(m => m.PhotoPageModule),
         canActivate: [OnlyLoggedAuthGuard]
     },
+  {
+    path: 'todo-option',
+    loadChildren: () => import('./todo-option/todo-option.module').then( m => m.TodoOptionPageModule)
+  },
 ];
 
 @NgModule({

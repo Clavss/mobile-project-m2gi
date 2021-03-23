@@ -1,0 +1,10 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Options on {{todo.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+</ion-content>
+<ion-button color="danger" (click)="parent.delete(todo.id); dismiss()">Delete</ion-button>
+
