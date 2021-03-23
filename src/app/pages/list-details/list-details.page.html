@@ -12,6 +12,7 @@
     <ion-list lines="full" inset="true" mode="ios">
       <ion-item-sliding *ngFor="let t of currentList?.todos | async">
         <ion-item [routerLink]="['./todo-details/', t?.id]" routerDirection="forward">
+          <ion-checkbox slot="start" color="success" [checked]="t?.isDone" (ionChange)="update(t, $event)"></ion-checkbox>
           <ion-label>{{ t?.name }}</ion-label>
         </ion-item>
         <ion-item-options side="end">

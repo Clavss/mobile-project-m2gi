@@ -24,6 +24,15 @@ export class HomePage {
         });
     }
 
+    private getTodosLength(list: List): number {
+        //this.listService.getAllTodos(list.id).subscribe(res => this.length = res.length);
+        return 0;
+    }
+
+    private getTodosDoneLength(list: List): number {
+        return 0;
+    }
+
     delete(id: string): void {
         this.listService.deleteList(id);
     }

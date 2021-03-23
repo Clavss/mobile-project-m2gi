@@ -4,6 +4,7 @@ import {List} from "../../models/list";
 import {ListService} from "../../services/list.service";
 import {ModalController} from "@ionic/angular";
 import {CreateTodoComponent} from "../../create-todo/create-todo.component";
+import {Todo} from "../../models/todo";
 
 @Component({
 	selector: 'app-list-details',
@@ -28,6 +29,10 @@ export class ListDetailsPage implements OnInit {
 	}
 
 	ngOnInit() {
+	}
+
+	update(todo: Todo, event) {
+		this.listService.updateTodo(this.currentList, todo, todo.name, todo.description, event.target.checked);
 	}
 
 	delete(todoId: string): void {

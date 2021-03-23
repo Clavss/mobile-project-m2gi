@@ -49,7 +49,9 @@ export class ListService {
 			todos: null,
 			id: list.id,
 			name: list.name,
-			owner: list.owner
+			owner: list.owner,
+			canRead: list.canRead,
+			canWrite: list.canWrite
 		});
 	}
 
@@ -84,12 +86,12 @@ export class ListService {
 			.pipe(flatMap(t => t));
 	}
 
-	updateTodo(list: List, todo: Todo, name: string, desc: string) {
+	updateTodo(list: List, todo: Todo, name: string, desc: string, isDone: boolean) {
 		this.listsCollection.doc(list.id).collection('todos').doc(todo.id).set({
 			id: todo.id,
 			name: name,
 			description: desc,
-			isDone: todo.isDone
+			isDone: isDone
 		});
 	}
 }
