@@ -4,7 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-</ion-content>
+<ion-input placeholder="Email" #input></ion-input>
+<div style="display: flex; flex-direction: row">
+  <ion-text color="danger" *ngIf="error">
+      <span>
+        Unknown user
+      </span>
+  </ion-text>
+  <ion-button color="primary" (click)="addWrite(input.value)">Add writer</ion-button>
+  <ion-button color="secondary">Add reader</ion-button>
+</div>
 <ion-button color="danger" (click)="parent.delete(list.id); dismiss()">Delete</ion-button>
 
