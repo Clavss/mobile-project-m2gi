@@ -32,7 +32,7 @@ export class ListDetailsPage implements OnInit {
 	}
 
 	update(todo: Todo, event) {
-		this.listService.updateTodo(this.currentList, todo, todo.name, todo.description, event.target.checked);
+		this.listService.updateTodoIsDone(this.currentList, todo, event.target.checked);
 	}
 
 	delete(todoId: string): void {
