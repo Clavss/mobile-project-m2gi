@@ -5,6 +5,8 @@ import {ListService} from '../../services/list.service';
 import {List} from '../../models/list';
 import {Observable} from 'rxjs';
 import firebase from 'firebase';
+import {Todo} from '../../models/todo';
+import {TodoOptionPage} from '../../todo-option/todo-option.page';
 
 @Component({
     selector: 'app-home',
@@ -16,36 +18,30 @@ export class HomePage {
     mapSize: Map<string, number> = new Map();
     mapSizeValid: Map<string, number> = new Map();
 
+
     constructor(private listService: ListService,
                 private modalController: ModalController) {
         firebase.auth().onAuthStateChanged((user) => {
             if (user !== null) {
                 this.listService.reloadData();
                 this.lists = this.listService.getAllLists();
-            }
-        });
-        this.listService.getAllLists().subscribe(
-            l => {
-                l.forEach(
-                    (todolist) => {
+                this.lists.subscribe(l => {
+                    l.forEach((todolist) => {
                         listService.getAllTodos(todolist.id).subscribe(
                             (todos) => {
                                 let c = 0;
-                                todos.forEach(
-                                    (todo) => {
-                                        if (todo.isDone) {
-                                            c += 1;
-                                        }
+                                todos.forEach((todo) => {
+                                    if (todo.isDone) {
+                                        c += 1;
                                     }
-                                );
+                                });
                                 this.mapSize.set(todolist.id, todos.length);
                                 this.mapSizeValid.set(todolist.id, c);
-                            }
-                        );
-                    }
-                );
-            })
-        ;
+                            });
+                    });
+                });
+            }
+        });
     }
 
     getTodoNumber(list: List): number {
@@ -73,6 +69,19 @@ export class HomePage {
             cssClass: 'auto-height',
         });
         return await modal.present();
+    }
+
+    async showOption(l: List) {
+        const modal2 = await this.modalController.create({
+            component: TodoOptionPage,
+            componentProps: {
+                list: l,
+                parent: this
+            },
+            swipeToClose: true,
+            cssClass: 'auto-height',
+        });
+        return await modal2.present();
     }
 
 }

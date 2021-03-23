@@ -30,7 +30,6 @@ export class ListService {
                 }))
             );
 
-            // tslint:disable-next-line:max-line-length
             const byRead$ = this.db.collection<List>('lists', ref => ref.where('canRead', 'array-contains', user.email)).snapshotChanges().pipe(
                 map(actions => actions.map(a => {
                     const data = a.payload.doc.data() as List;
@@ -39,7 +38,6 @@ export class ListService {
                 }))
             );
 
-            // tslint:disable-next-line:max-line-length
             const byWrite$ = this.db.collection<List>('lists', ref => ref.where('canWrite', 'array-contains', user.email)).snapshotChanges().pipe(
                 map(actions => actions.map(a => {
                     const data = a.payload.doc.data() as List;
@@ -52,7 +50,7 @@ export class ListService {
         }
     }
 
-    combine2Observable(obs1$: Observable<any>, obs2$: Observable<any>) {
+    private combine2Observable(obs1$: Observable<any>, obs2$: Observable<any>) {
         return combineLatest(obs1$, obs2$, (a, b) => {
             return a.reduce((acc, actual) => {
                 if (!acc.some(o => o.id === actual.id)) {
@@ -65,6 +63,18 @@ export class ListService {
 
     getAllLists(): Observable<List[]> {
         return this.lists;
+    }
+
+    updateListNewReader(email: string, list: List) {
+        this.listsCollection.doc(list.id).update({
+            canRead: [...list.canRead, email]
+        });
+    }
+
+    updateListNewWriter(email: string, list: List) {
+        this.listsCollection.doc(list.id).update({
+            canWrite: [...list.canWrite, email]
+        });
     }
 
     getOne(id: string): Observable<List> {
@@ -117,12 +127,17 @@ export class ListService {
             .pipe(flatMap(t => t));
     }
 
-    updateTodo(list: List, todo: Todo, name: string, desc: string, isDone: boolean) {
-        this.listsCollection.doc(list.id).collection('todos').doc(todo.id).set({
+    updateTodoIsDone(list: List, todo: Todo, isDone: boolean) {
+        this.listsCollection.doc(list.id).collection('todos').doc(todo.id).update({
+            isDone: isDone
+        });
+    }
+
+    updateTodoNameAndDesc(list: List, todo: Todo, name: string, desc: string) {
+        this.listsCollection.doc(list.id).collection('todos').doc(todo.id).update({
             id: todo.id,
             name: name,
-            description: desc,
-            isDone: isDone
+            description: desc
         });
     }
 }

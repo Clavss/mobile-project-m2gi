@@ -47,7 +47,7 @@ export class TodoDetailsPage implements OnInit {
   submitForm() {
     const name = this.updateTodoForm.get('name').value;
     const desc = this.updateTodoForm.get('description').value;
-    this.listService.updateTodo(this.currentList, this.currentTodo, name, desc, false);
+    this.listService.updateTodoNameAndDesc(this.currentList, this.currentTodo, name, desc);
     this.navCtrl.back();
   }
 

@@ -34,7 +34,7 @@ export class ListDetailsPage implements OnInit {
     }
 
     update(todo: Todo, event) {
-        this.listService.updateTodo(this.currentList, todo, todo.name, todo.description, event.target.checked);
+        this.listService.updateTodoIsDone(this.currentList, todo, event.target.checked);
     }
 
     delete(todoId: string): void {
@@ -51,19 +51,6 @@ export class ListDetailsPage implements OnInit {
             cssClass: 'auto-height',
         });
         return await modal.present();
-    }
-
-    async showOption(todo: Todo) {
-        const modal2 = await this.modalController.create({
-            component: TodoOptionPage,
-            componentProps: {
-                todo,
-                parent: this
-            },
-            swipeToClose: true,
-            cssClass: 'auto-height',
-        });
-        return await modal2.present();
     }
 
     goTodo(todoId: string, sliderIndex: number) {

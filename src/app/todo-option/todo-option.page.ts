@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {Todo} from '../models/todo';
 import {ListDetailsPage} from '../pages/list-details/list-details.page';
+import {List} from '../models/list';
 
 @Component({
   selector: 'app-todo-option',
@@ -10,7 +10,7 @@ import {ListDetailsPage} from '../pages/list-details/list-details.page';
 })
 export class TodoOptionPage implements OnInit {
 
-  @Input() todo: Todo;
+  @Input() list: List;
   @Input() parent: ListDetailsPage;
 
   constructor(public modalCtrl: ModalController) { }
