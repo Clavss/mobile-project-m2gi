@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.checkbox {
+  align-self: center;
+  margin-left: 10px;
+}
+
+.list {
+  width: 100%
+}

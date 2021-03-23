@@ -4,7 +4,7 @@ import {CreateListComponent} from '../../create-list/create-list.component';
 import {ListService} from '../../services/list.service';
 import {List} from '../../models/list';
 import {Observable} from 'rxjs';
-import firebase from "firebase";
+import firebase from 'firebase';
 
 @Component({
     selector: 'app-home',
@@ -13,6 +13,8 @@ import firebase from "firebase";
 })
 export class HomePage {
     lists: Observable<List[]>;
+    mapSize: Map<string, number> = new Map();
+    mapSizeValid: Map<string, number> = new Map();
 
     constructor(private listService: ListService,
                 private modalController: ModalController) {
@@ -22,15 +24,43 @@ export class HomePage {
                 this.lists = this.listService.getAllLists();
             }
         });
+        this.listService.getAllLists().subscribe(
+            l => {
+                l.forEach(
+                    (todolist) => {
+                        console.log(todolist);
+                        listService.getAllTodos(todolist.id).subscribe(
+                            (todos) => {
+                                let c = 0;
+                                todos.forEach(
+                                    (todo) => {
+                                        if (todo.isDone) {
+                                            c += 1;
+                                        }
+                                    }
+                                );
+                                this.mapSize.set(todolist.id, todos.length);
+                                this.mapSizeValid.set(todolist.id, c);
+                            }
+                        );
+                    }
+                );
+            })
+        ;
     }
 
-    private getTodosLength(list: List): number {
-        //this.listService.getAllTodos(list.id).subscribe(res => this.length = res.length);
-        return 0;
+    getTodoNumber(list: List): number {
+        if (!this.mapSize.has(list.id)) {
+            return 0;
+        }
+        return this.mapSize.get(list.id);
     }
 
-    private getTodosDoneLength(list: List): number {
-        return 0;
+    getTodoNumberValid(list: List): number {
+        if (!this.mapSizeValid.has(list.id)) {
+            return 0;
+        }
+        return this.mapSizeValid.get(list.id);
     }
 
     delete(id: string): void {

@@ -7,16 +7,16 @@ import {flatMap, map} from "rxjs/operators";
 import firebase from "firebase";
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class ListService {
 
-	private listsCollection: AngularFirestoreCollection<List>;
-	lists: Observable<List[]>;
+    private listsCollection: AngularFirestoreCollection<List>;
+    lists: Observable<List[]>;
 
-	constructor(private db: AngularFirestore) {
-		this.reloadData();
-	}
+    constructor(private db: AngularFirestore) {
+        this.reloadData();
+    }
 
 	reloadData() {
 		const user = firebase.auth().currentUser;
@@ -65,62 +65,62 @@ export class ListService {
 		return this.lists;
 	}
 
-	getOne(id: string): Observable<List> {
-		return this.lists
-			.pipe(map(
-				lists => lists.find(list => list.id === id)
-			));
-	}
+    getOne(id: string): Observable<List> {
+        return this.lists
+            .pipe(map(
+                lists => lists.find(list => list.id === id)
+            ));
+    }
 
-	createList(listName: string, userEmail: string) {
-		const list = new List(listName, userEmail);
-		this.listsCollection.doc(list.id).set({
-			todos: null,
-			id: list.id,
-			name: list.name,
-			owner: list.owner,
-			canRead: list.canRead,
-			canWrite: list.canWrite
-		});
-	}
+    createList(listName: string, userEmail: string) {
+        const list = new List(listName, userEmail);
+        this.listsCollection.doc(list.id).set({
+            todos: null,
+            id: list.id,
+            name: list.name,
+            owner: list.owner,
+            canRead: list.canRead,
+            canWrite: list.canWrite
+        });
+    }
 
-	deleteList(listId: string) {
-		this.listsCollection.doc(listId).delete();
-	}
+    deleteList(listId: string) {
+        this.listsCollection.doc(listId).delete();
+    }
 
-	addTodo(listId: string, todoName: string): void {
-		const todo = new Todo(todoName, false);
-		this.listsCollection.doc(listId).collection('todos').doc(todo.id).set(Object.assign({}, todo));
-	}
+    addTodo(listId: string, todoName: string): void {
+        const todo = new Todo(todoName, false);
+        this.listsCollection.doc(listId).collection('todos').doc(todo.id).set(Object.assign({}, todo));
+    }
 
-	deleteTodo(listId: string, todoId: string): void {
-		this.listsCollection.doc(listId).collection('todos').doc(todoId).delete();
-	}
+    deleteTodo(listId: string, todoId: string): void {
+        this.listsCollection.doc(listId).collection('todos').doc(todoId).delete();
+    }
 
-	getAllTodos(listId: string): Observable<Todo[]> {
-		const todosCollection = this.listsCollection.doc(listId).collection<Todo>('todos');
-		return todosCollection.snapshotChanges().pipe(
-			map(actions => actions.map(a => {
-				const data = a.payload.doc.data() as Todo;
-				const id = a.payload.doc.id;
-				return {id, ...data};
-			}))
-		);
-	}
+    getAllTodos(listId: string): Observable<Todo[]> {
+        const todosCollection = this.listsCollection.doc(listId).collection<Todo>('todos');
+        return todosCollection.snapshotChanges().pipe(
+            map(actions => actions.map(a => {
+                const data = a.payload.doc.data() as Todo;
+                const id = a.payload.doc.id;
+                return {id, ...data};
+            }))
+        );
+    }
 
-	getOneTodo(listId: string, todoId: string): Observable<Todo> {
-		return this.listsCollection.doc(listId)
-			.collection<Todo>('todos', ref => ref.where('id', '==', todoId).limit(1))
-			.valueChanges()
-			.pipe(flatMap(t => t));
-	}
+    getOneTodo(listId: string, todoId: string): Observable<Todo> {
+        return this.listsCollection.doc(listId)
+            .collection<Todo>('todos', ref => ref.where('id', '==', todoId).limit(1))
+            .valueChanges()
+            .pipe(flatMap(t => t));
+    }
 
-	updateTodo(list: List, todo: Todo, name: string, desc: string, isDone: boolean) {
-		this.listsCollection.doc(list.id).collection('todos').doc(todo.id).set({
-			id: todo.id,
-			name: name,
-			description: desc,
-			isDone: isDone
-		});
-	}
+    updateTodo(list: List, todo: Todo, name: string, desc: string, isDone: boolean) {
+        this.listsCollection.doc(list.id).collection('todos').doc(todo.id).set({
+            id: todo.id,
+            name: name,
+            description: desc,
+            isDone: isDone
+        });
+    }
 }
