@@ -172,11 +172,11 @@ export class ListService {
     }
 
     isOwner(list: List) {
-        return list.owner == firebase.auth().currentUser.email;
+        return list.owner == firebase.auth().currentUser?.email;
     }
 
     isWriter(list: List) {
-        return list.canWrite.includes(firebase.auth().currentUser.email);
+        return list.canWrite.includes(firebase.auth().currentUser?.email);
     }
 
 }

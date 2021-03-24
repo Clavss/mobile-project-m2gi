@@ -13,7 +13,7 @@
   </ion-header>
 
 
-  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.controls['email'].value, loginForm.controls['password'].value)">
+  <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login(loginForm.controls['email'].value, loginForm.controls['password'].value)" novalidate>
     <ion-item>Already have an account ?</ion-item>
     <ion-item>
       <ion-input placeholder="email" formControlName="email"></ion-input>
