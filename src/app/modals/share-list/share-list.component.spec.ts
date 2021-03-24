@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TodoOptionPage } from './todo-option.page';
+import { ShareListComponent } from './share-list.component';
 
-describe('TodoOptionPage', () => {
-  let component: TodoOptionPage;
-  let fixture: ComponentFixture<TodoOptionPage>;
+describe('ShareListComponent', () => {
+  let component: ShareListComponent;
+  let fixture: ComponentFixture<ShareListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodoOptionPage ],
+      declarations: [ ShareListComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TodoOptionPage);
+    fixture = TestBed.createComponent(ShareListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

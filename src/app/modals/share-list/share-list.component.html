@@ -1,0 +1,24 @@
+<div class="inner-content">
+  <form [formGroup]="shareListForm" (ngSubmit)="shareListForm.valid && share(readT.checked, writeT.checked)" novalidate>
+    <ion-item>
+      <ion-icon name="eye"></ion-icon><ion-toggle [disabled]="writeT.checked" [checked]="readT.checked || writeT.checked" mode="md" #readT></ion-toggle><ion-label>read</ion-label>
+      <ion-icon name="create"></ion-icon><ion-toggle mode="md" #writeT></ion-toggle><ion-label>write</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input autofocus="true" placeholder="Email" inputmode="email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" type="email" name="email" formControlName="email" required></ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="errorControl.email.touched && errorControl.email.errors?.required">
+      <span>
+        This field is required
+      </span>
+    </ion-text>
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="shareListForm.invalid || (!writeT.checked && !readT.checked)" type="submit" color="primary" expand="block">
+          Share
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</div>

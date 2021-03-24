@@ -15,25 +15,24 @@ import {environment} from '../environments/environment';
 import {AngularFireAnalyticsModule} from '@angular/fire/analytics';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {FormsModule} from '@angular/forms';
-import { TodoOptionPageModule} from './todo-option/todo-option.module';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-    ],
-    entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFireAnalyticsModule,
-        AngularFirestoreModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}), FormsModule, TodoOptionPageModule
-    ],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-    ],
-    bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+	],
+	entryComponents: [],
+	imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule,
+		AngularFireModule.initializeApp(environment.firebaseConfig),
+		AngularFireAnalyticsModule,
+		AngularFirestoreModule,
+		ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}), FormsModule
+	],
+	providers: [
+		StatusBar,
+		SplashScreen,
+		{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -5,22 +5,24 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HomePage} from './home.page';
 
 import {HomePageRoutingModule} from './home-routing.module';
-import {CreateListComponent} from '../../create-list/create-list.component';
+import {CreateListComponent} from '../../modals/create-list/create-list.component';
+import {ShareListComponent} from "../../modals/share-list/share-list.component";
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        HomePageRoutingModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
-    declarations: [
-        HomePage,
-        CreateListComponent
-    ]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		HomePageRoutingModule,
+		FormsModule,
+		ReactiveFormsModule
+	],
+	declarations: [
+		HomePage,
+		CreateListComponent,
+		ShareListComponent
+	]
 })
 export class HomePageModule {
 }

@@ -10,10 +10,10 @@
 <ion-content>
   <div *ngIf="currentList?.todos?.length != 0">
     <ion-list lines="full" inset="true" mode="ios">
-      <ion-item-sliding *ngFor="let t of currentList?.todos | async; let i=index" id="slider-{{i}}">
+      <ion-item-sliding [disabled]="isOnlyReader(currentList)" *ngFor="let t of currentList?.todos | async; let i=index" id="slider-{{i}}">
         <div class="row">
-          <ion-checkbox class="checkbox" slot="start" color="success" [checked]="t?.isDone" (ionChange)="update(t, $event)"></ion-checkbox>
-          <ion-item class="list" (click)="goTodo(t?.id, i)" routerDirection="forward">
+          <ion-checkbox [disabled]="isOnlyReader(currentList)" class="checkbox" slot="start" color="success" [checked]="t?.isDone" (ionChange)="update(t, $event)"></ion-checkbox>
+          <ion-item [disabled]="isOnlyReader(currentList)" class="list" (click)="goTodo(t?.id, i)" routerDirection="forward">
             <ion-label>{{ t?.name }}</ion-label>
           </ion-item>
         </div>

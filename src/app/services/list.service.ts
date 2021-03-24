@@ -66,15 +66,39 @@ export class ListService {
     }
 
     updateListNewReader(email: string, list: List) {
-        this.listsCollection.doc(list.id).update({
-            canRead: [...list.canRead, email]
-        });
+        if (!list.canRead.includes(email)) {
+            this.listsCollection.doc(list.id).update({
+                canRead: [...list.canRead, email]
+            });
+        }
     }
 
     updateListNewWriter(email: string, list: List) {
-        this.listsCollection.doc(list.id).update({
-            canWrite: [...list.canWrite, email]
-        });
+        if (!list.canWrite.includes(email)) {
+            this.listsCollection.doc(list.id).update({
+                canWrite: [...list.canWrite, email]
+            });
+        }
+    }
+
+    updateListRemoveWriter(email: string, list: List) {
+        if (list.canWrite.includes(email)) {
+            const index = list.canWrite.indexOf(email, 0);
+            const newCanWrite = list.canWrite.filter((el) => el != email);
+            this.listsCollection.doc(list.id).update({
+                canWrite: newCanWrite
+            });
+        }
+    }
+
+    updateListRemoveReader(email: string, list: List) {
+        if (list.canRead.includes(email)) {
+            const index = list.canRead.indexOf(email, 0);
+            const newCanRead = list.canRead.filter((el) => el != email);
+            this.listsCollection.doc(list.id).update({
+                canRead: newCanRead
+            });
+        }
     }
 
     getOne(id: string): Observable<List> {
@@ -96,8 +120,14 @@ export class ListService {
         });
     }
 
-    deleteList(listId: string) {
-        this.listsCollection.doc(listId).delete();
+    deleteList(email: string, list: List) {
+        if (this.isOwner(list)) {
+            this.listsCollection.doc(list.id).delete();
+        } else if (this.isWriter(list)) {
+            this.updateListRemoveWriter(email, list);
+        } else {
+            this.updateListRemoveReader(email, list);
+        }
     }
 
     addTodo(listId: string, todoName: string): void {
@@ -140,4 +170,13 @@ export class ListService {
             description: desc
         });
     }
+
+    isOwner(list: List) {
+        return list.owner == firebase.auth().currentUser.email;
+    }
+
+    isWriter(list: List) {
+        return list.canWrite.includes(firebase.auth().currentUser.email);
+    }
+
 }
